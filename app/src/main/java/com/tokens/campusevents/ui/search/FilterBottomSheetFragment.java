@@ -60,6 +60,8 @@ public class FilterBottomSheetFragment extends Fragment {
             });
         }
 
+        ChipGroup chipGroupLocation = view.findViewById(R.id.chip_group_location);
+
         // Apply button
         View btnApply = view.findViewById(R.id.btn_apply);
         if (btnApply != null) {
@@ -78,12 +80,22 @@ public class FilterBottomSheetFragment extends Fragment {
                     selectedCategory = chipIdToCategory(checkedId);
                 }
 
+                // Location from chip group
+                String selectedLocation = null;
+                if (chipGroupLocation != null) {
+                    int checkedId = chipGroupLocation.getCheckedChipIds().isEmpty()
+                            ? View.NO_ID
+                            : chipGroupLocation.getCheckedChipIds().get(0);
+                    selectedLocation = chipIdToLocation(checkedId);
+                }
+
                 // Online filter
                 Boolean onlineFilter = null;
                 if (isOnlineSelected) onlineFilter = true;
                 else if (isOfflineSelected) onlineFilter = false;
 
                 searchEntry.getSavedStateHandle().set("filterCategory", selectedCategory);
+                searchEntry.getSavedStateHandle().set("filterLocation", selectedLocation);
                 searchEntry.getSavedStateHandle().set("filterOnline", onlineFilter);
                 searchEntry.getSavedStateHandle().set("filterFree", (Boolean) null);
 
@@ -95,9 +107,8 @@ public class FilterBottomSheetFragment extends Fragment {
         View btnClear = view.findViewById(R.id.btn_clear);
         if (btnClear != null) {
             btnClear.setOnClickListener(v -> {
-                if (chipGroupCategory != null) {
-                    chipGroupCategory.clearCheck();
-                }
+                if (chipGroupCategory != null) chipGroupCategory.clearCheck();
+                if (chipGroupLocation != null) chipGroupLocation.clearCheck();
                 isOnlineSelected = false;
                 isOfflineSelected = false;
                 if (btnOnline != null) updateTypeButtonStyle(btnOnline, false);
@@ -105,6 +116,7 @@ public class FilterBottomSheetFragment extends Fragment {
 
                 if (searchEntry != null) {
                     searchEntry.getSavedStateHandle().set("filterCategory", (EventCategory) null);
+                    searchEntry.getSavedStateHandle().set("filterLocation", (String) null);
                     searchEntry.getSavedStateHandle().set("filterOnline", (Boolean) null);
                     searchEntry.getSavedStateHandle().set("filterFree", (Boolean) null);
                 }
@@ -112,6 +124,14 @@ public class FilterBottomSheetFragment extends Fragment {
                 navController.navigateUp();
             });
         }
+    }
+
+    private String chipIdToLocation(int chipId) {
+        if (chipId == R.id.chip_pdc) return "PDC";
+        if (chipId == R.id.chip_sbasse) return "SBASSE";
+        if (chipId == R.id.chip_sdsb) return "SDSB";
+        if (chipId == R.id.chip_auditorium) return "Auditorium";
+        return null;
     }
 
     private EventCategory chipIdToCategory(int chipId) {

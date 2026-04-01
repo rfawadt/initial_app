@@ -69,7 +69,7 @@ public class EventRepository {
         }
         String lowerQuery = query.toLowerCase();
         for (Event event : MockData.events) {
-            if (event.status == EventStatus.CANCELLED) continue;
+            if (event.status == EventStatus.CANCELLED || event.status == EventStatus.ENDED) continue;
             if (event.title.toLowerCase().contains(lowerQuery)
                     || event.description.toLowerCase().contains(lowerQuery)
                     || event.organizer.toLowerCase().contains(lowerQuery)
@@ -86,7 +86,8 @@ public class EventRepository {
         }
         List<Event> result = new ArrayList<>();
         for (Event event : MockData.events) {
-            if (event.status != EventStatus.CANCELLED && event.category == category) {
+            if (event.status != EventStatus.CANCELLED && event.status != EventStatus.ENDED
+                    && event.category == category) {
                 result.add(event);
             }
         }
@@ -100,7 +101,7 @@ public class EventRepository {
         }
         String lowerLocation = location.toLowerCase();
         for (Event event : MockData.events) {
-            if (event.status != EventStatus.CANCELLED
+            if (event.status != EventStatus.CANCELLED && event.status != EventStatus.ENDED
                     && event.venue.toLowerCase().contains(lowerLocation)) {
                 result.add(event);
             }
@@ -111,7 +112,8 @@ public class EventRepository {
     public List<Event> filterByOnline(boolean isOnline) {
         List<Event> result = new ArrayList<>();
         for (Event event : MockData.events) {
-            if (event.status != EventStatus.CANCELLED && event.isOnline == isOnline) {
+            if (event.status != EventStatus.CANCELLED && event.status != EventStatus.ENDED
+                    && event.isOnline == isOnline) {
                 result.add(event);
             }
         }

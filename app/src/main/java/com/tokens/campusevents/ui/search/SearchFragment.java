@@ -96,6 +96,8 @@ public class SearchFragment extends Fragment {
         NavBackStackEntry searchEntry = navController.getBackStackEntry(R.id.nav_search);
         searchEntry.getSavedStateHandle().<EventCategory>getLiveData("filterCategory")
                 .observe(getViewLifecycleOwner(), category -> viewModel.setCategory(category));
+        searchEntry.getSavedStateHandle().<String>getLiveData("filterLocation")
+                .observe(getViewLifecycleOwner(), location -> viewModel.setLocationFilter(location));
         searchEntry.getSavedStateHandle().<Boolean>getLiveData("filterOnline")
                 .observe(getViewLifecycleOwner(), isOnline -> viewModel.setOnlineFilter(isOnline));
         searchEntry.getSavedStateHandle().<Boolean>getLiveData("filterFree")
@@ -123,6 +125,13 @@ public class SearchFragment extends Fragment {
                 viewModel.setCategory(EventCategory.ALL);
                 viewModel.setFreeFilter(null);
                 viewModel.setOnlineFilter(null);
+                viewModel.setDateFilter(null);
+                break;
+            case "Today":
+                viewModel.setDateFilter("today");
+                break;
+            case "This Week":
+                viewModel.setDateFilter("thisweek");
                 break;
             case "Free":
                 viewModel.setFreeFilter(true);
@@ -140,7 +149,6 @@ public class SearchFragment extends Fragment {
                 viewModel.setCategory(EventCategory.ARTS);
                 break;
             default:
-                // "Today", "This Week" — no VM method yet, ignore
                 break;
         }
     }
