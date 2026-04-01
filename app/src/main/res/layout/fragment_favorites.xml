@@ -78,6 +78,42 @@
             android:textSize="@dimen/text_body" />
     </LinearLayout>
 
+    <!-- Sub-tabs for RSVPs: Upcoming / Past (hidden by default) -->
+    <LinearLayout
+        android:id="@+id/layout_rsvp_subtabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_sm"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/spacing_md"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tab_upcoming"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="@dimen/spacing_xs"
+            android:background="@drawable/bg_chip_selected"
+            android:gravity="center"
+            android:text="@string/upcoming"
+            android:textColor="@color/text_on_primary"
+            android:textSize="@dimen/text_caption"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tab_past"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:layout_weight="1"
+            android:layout_marginStart="@dimen/spacing_xs"
+            android:background="@drawable/bg_chip"
+            android:gravity="center"
+            android:text="@string/past"
+            android:textColor="@color/text_secondary"
+            android:textSize="@dimen/text_caption" />
+    </LinearLayout>
+
     <!-- Events List -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_events"

@@ -8,8 +8,11 @@ import com.tokens.campusevents.data.model.Event;
 import com.tokens.campusevents.data.repository.UserRepository;
 import com.tokens.campusevents.ui.adapter.ScheduleBlockAdapter;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class DiscoverViewModel extends ViewModel {
 
@@ -37,7 +40,15 @@ public class DiscoverViewModel extends ViewModel {
     }
 
     public void loadSchedule() {
-        List<Event> goingEvents = UserRepository.getInstance().getUserGoingEvents();
+        String today = getTodayDateString();
+        List<Event> allGoingEvents = UserRepository.getInstance().getUserGoingEvents();
+        List<Event> goingEvents = new ArrayList<>();
+        for (Event e : allGoingEvents) {
+            if (today.equals(e.date)) {
+                goingEvents.add(e);
+            }
+        }
+
         List<ScheduleBlockAdapter.ScheduleHour> hours = new ArrayList<>();
         boolean conflictFound = false;
         StringBuilder conflictDesc = new StringBuilder();
@@ -82,6 +93,10 @@ public class DiscoverViewModel extends ViewModel {
         schedule.setValue(hours);
         hasConflict.setValue(conflictFound);
         conflictDescription.setValue(conflictDesc.toString().trim());
+    }
+
+    private String getTodayDateString() {
+        return new SimpleDateFormat("MMMM d, yyyy", Locale.getDefault()).format(new Date());
     }
 
     private int extractHour(String time) {

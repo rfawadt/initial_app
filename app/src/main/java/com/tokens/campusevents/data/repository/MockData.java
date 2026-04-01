@@ -97,10 +97,20 @@ public class MockData {
                 100, 78, 0, false, EventStatus.ENDED
         ));
 
+        events.add(new Event(
+                "evt_9", "Spring Career Fair 2026",
+                "Annual career fair featuring top companies from tech, finance, and consulting sectors. Bring your CV and dress professionally.",
+                EventCategory.ACADEMIC, "LUMS Career Services", "org_1",
+                "PDC Lawn", "Near Main Gate",
+                "April 1, 2026", "10:00 AM", "4:00 PM",
+                300, 120, 0, false, EventStatus.LIVE
+        ));
+
         // RSVPs
         rsvps.add(new Rsvp("user_1", "Ahmed Raza", "ahmed.raza@lums.edu.pk", "evt_1", RsvpStatus.GOING));
         rsvps.add(new Rsvp("user_1", "Ahmed Raza", "ahmed.raza@lums.edu.pk", "evt_2", RsvpStatus.INTERESTED));
         rsvps.add(new Rsvp("user_1", "Ahmed Raza", "ahmed.raza@lums.edu.pk", "evt_3", RsvpStatus.GOING));
+        rsvps.add(new Rsvp("user_1", "Ahmed Raza", "ahmed.raza@lums.edu.pk", "evt_9", RsvpStatus.GOING));
         rsvps.add(new Rsvp("user_2", "Sara Ali", "sara.ali@lums.edu.pk", "evt_1", RsvpStatus.GOING));
         rsvps.add(new Rsvp("user_2", "Sara Ali", "sara.ali@lums.edu.pk", "evt_3", RsvpStatus.GOING));
         rsvps.add(new Rsvp("user_3", "Omar Khan", "omar.khan@lums.edu.pk", "evt_1", RsvpStatus.INTERESTED));

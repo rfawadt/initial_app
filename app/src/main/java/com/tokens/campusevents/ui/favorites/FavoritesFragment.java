@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.tokens.campusevents.R;
-import com.tokens.campusevents.data.model.Event;
 import com.tokens.campusevents.data.repository.UserRepository;
 import com.tokens.campusevents.ui.adapter.EventCardAdapter;
 
@@ -40,27 +39,40 @@ public class FavoritesFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(FavoritesViewModel.class);
         NavController navController = Navigation.findNavController(view);
 
-        // Tab buttons
         TextView tabSaved = view.findViewById(R.id.tab_saved);
         TextView tabRsvps = view.findViewById(R.id.tab_rsvps);
+        View layoutRsvpSubtabs = view.findViewById(R.id.layout_rsvp_subtabs);
+        TextView tabUpcoming = view.findViewById(R.id.tab_upcoming);
+        TextView tabPast = view.findViewById(R.id.tab_past);
 
         tabSaved.setOnClickListener(v -> {
-            tabSaved.setBackgroundResource(R.drawable.bg_chip_selected);
-            tabSaved.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_on_primary));
-            tabRsvps.setBackgroundResource(R.drawable.bg_chip);
-            tabRsvps.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_secondary));
+            setTabSelected(tabSaved, tabRsvps);
+            if (layoutRsvpSubtabs != null) layoutRsvpSubtabs.setVisibility(View.GONE);
             viewModel.loadSavedEvents();
         });
 
         tabRsvps.setOnClickListener(v -> {
-            tabRsvps.setBackgroundResource(R.drawable.bg_chip_selected);
-            tabRsvps.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_on_primary));
-            tabSaved.setBackgroundResource(R.drawable.bg_chip);
-            tabSaved.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_secondary));
-            viewModel.loadRsvpEvents();
+            setTabSelected(tabRsvps, tabSaved);
+            if (layoutRsvpSubtabs != null) layoutRsvpSubtabs.setVisibility(View.VISIBLE);
+            // Default to Upcoming when switching to RSVPs tab
+            if (tabUpcoming != null) setTabSelected(tabUpcoming, tabPast);
+            viewModel.loadUpcomingRsvpEvents();
         });
 
-        // Events RecyclerView
+        if (tabUpcoming != null) {
+            tabUpcoming.setOnClickListener(v -> {
+                setTabSelected(tabUpcoming, tabPast);
+                viewModel.loadUpcomingRsvpEvents();
+            });
+        }
+
+        if (tabPast != null) {
+            tabPast.setOnClickListener(v -> {
+                setTabSelected(tabPast, tabUpcoming);
+                viewModel.loadPastRsvpEvents();
+            });
+        }
+
         RecyclerView rvEvents = view.findViewById(R.id.rv_events);
         rvEvents.setLayoutManager(new LinearLayoutManager(requireContext()));
         eventCardAdapter = new EventCardAdapter(
@@ -79,11 +91,9 @@ public class FavoritesFragment extends Fragment {
                 });
         rvEvents.setAdapter(eventCardAdapter);
 
-        // Count text and empty state
         TextView tvCount = view.findViewById(R.id.tv_count);
         View emptyState = view.findViewById(R.id.tv_empty);
 
-        // Observe events
         viewModel.getEvents().observe(getViewLifecycleOwner(), events -> {
             eventCardAdapter.submitList(events);
             if (tvCount != null) {
@@ -95,7 +105,14 @@ public class FavoritesFragment extends Fragment {
             rvEvents.setVisibility(events.isEmpty() ? View.GONE : View.VISIBLE);
         });
 
-        // Default load saved
         viewModel.loadSavedEvents();
+    }
+
+    private void setTabSelected(TextView selected, TextView unselected) {
+        if (selected == null || unselected == null) return;
+        selected.setBackgroundResource(R.drawable.bg_chip_selected);
+        selected.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_on_primary));
+        unselected.setBackgroundResource(R.drawable.bg_chip);
+        unselected.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_secondary));
     }
 }

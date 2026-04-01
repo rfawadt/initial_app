@@ -36,52 +36,56 @@ public class OrganizerDashboardFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(OrganizerViewModel.class);
         NavController navController = Navigation.findNavController(view);
 
-        // Stats TextViews
         TextView tvStatEvents = view.findViewById(R.id.tv_stat_events);
         TextView tvStatRsvps = view.findViewById(R.id.tv_stat_rsvps);
         TextView tvStatViews = view.findViewById(R.id.tv_stat_views);
 
-        // Events RecyclerView
         RecyclerView rvOrganizerEvents = view.findViewById(R.id.rv_organizer_events);
         rvOrganizerEvents.setLayoutManager(new LinearLayoutManager(requireContext()));
-        eventAdapter = new OrganizerEventAdapter(event -> {
-            Bundle bundle = new Bundle();
-            bundle.putString("eventId", event.id);
-            navController.navigate(R.id.action_dashboard_to_editEvent, bundle);
-        });
+
+        eventAdapter = new OrganizerEventAdapter(
+                event -> {
+                    // Item tap → edit event
+                    Bundle bundle = new Bundle();
+                    bundle.putString("eventId", event.id);
+                    navController.navigate(R.id.action_dashboard_to_editEvent, bundle);
+                },
+                event -> {
+                    // View RSVPs button
+                    Bundle bundle = new Bundle();
+                    bundle.putString("eventId", event.id);
+                    navController.navigate(R.id.action_dashboard_to_rsvpList, bundle);
+                },
+                event -> {
+                    // Send Update button
+                    Bundle bundle = new Bundle();
+                    bundle.putString("eventId", event.id);
+                    navController.navigate(R.id.action_dashboard_to_postUpdate, bundle);
+                }
+        );
         rvOrganizerEvents.setAdapter(eventAdapter);
 
-        // Create event button
         View btnCreateEvent = view.findViewById(R.id.btn_create_event);
         if (btnCreateEvent != null) {
             btnCreateEvent.setOnClickListener(v ->
                     navController.navigate(R.id.action_dashboard_to_createEvent));
         }
 
-        // Observe stats
         viewModel.getTotalEvents().observe(getViewLifecycleOwner(), count -> {
-            if (tvStatEvents != null) {
-                tvStatEvents.setText(String.valueOf(count));
-            }
+            if (tvStatEvents != null) tvStatEvents.setText(String.valueOf(count));
         });
 
         viewModel.getTotalRsvps().observe(getViewLifecycleOwner(), count -> {
-            if (tvStatRsvps != null) {
-                tvStatRsvps.setText(String.valueOf(count));
-            }
+            if (tvStatRsvps != null) tvStatRsvps.setText(String.valueOf(count));
         });
 
         viewModel.getTotalViews().observe(getViewLifecycleOwner(), views -> {
-            if (tvStatViews != null) {
-                tvStatViews.setText(views);
-            }
+            if (tvStatViews != null) tvStatViews.setText(views);
         });
 
-        // Observe events
         viewModel.getEvents().observe(getViewLifecycleOwner(), events ->
                 eventAdapter.submitList(events));
 
-        // Load dashboard data
         viewModel.loadDashboard();
     }
 }

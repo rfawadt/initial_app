@@ -14,13 +14,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavBackStackEntry;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.tokens.campusevents.R;
-import com.tokens.campusevents.data.model.Event;
+import com.tokens.campusevents.data.model.EventCategory;
 import com.tokens.campusevents.data.repository.UserRepository;
 import com.tokens.campusevents.ui.adapter.CategoryChipAdapter;
 import com.tokens.campusevents.ui.adapter.EventCardAdapter;
@@ -48,29 +49,28 @@ public class SearchFragment extends Fragment {
         // Search input
         EditText etSearch = view.findViewById(R.id.et_search);
         etSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
             @Override
             public void afterTextChanged(Editable s) {
                 viewModel.search(s.toString());
             }
         });
 
-        // Filter chips
+        // Filter button → navigate to filter screen
+        View btnFilter = view.findViewById(R.id.btn_filter);
+        if (btnFilter != null) {
+            btnFilter.setOnClickListener(v ->
+                    navController.navigate(R.id.action_search_to_filter));
+        }
+
+        // Filter chips (quick category shortcuts)
         RecyclerView rvFilterChips = view.findViewById(R.id.rv_filter_chips);
         rvFilterChips.setLayoutManager(new LinearLayoutManager(requireContext(),
                 LinearLayoutManager.HORIZONTAL, false));
         CategoryChipAdapter chipAdapter = new CategoryChipAdapter(
                 viewModel.getFilterChips(),
-                chip -> {
-                    // Handle chip selection for filtering
-                });
+                chip -> applyChipFilter(chip));
         rvFilterChips.setAdapter(chipAdapter);
 
         // Search results
@@ -92,6 +92,15 @@ public class SearchFragment extends Fragment {
                 });
         rvSearchResults.setAdapter(eventCardAdapter);
 
+        // Observe filter results coming back from FilterBottomSheetFragment
+        NavBackStackEntry searchEntry = navController.getBackStackEntry(R.id.nav_search);
+        searchEntry.getSavedStateHandle().<EventCategory>getLiveData("filterCategory")
+                .observe(getViewLifecycleOwner(), category -> viewModel.setCategory(category));
+        searchEntry.getSavedStateHandle().<Boolean>getLiveData("filterOnline")
+                .observe(getViewLifecycleOwner(), isOnline -> viewModel.setOnlineFilter(isOnline));
+        searchEntry.getSavedStateHandle().<Boolean>getLiveData("filterFree")
+                .observe(getViewLifecycleOwner(), isFree -> viewModel.setFreeFilter(isFree));
+
         // Observe search results
         TextView tvResultCount = view.findViewById(R.id.tv_results_count);
         View emptyState = view.findViewById(R.id.tv_empty);
@@ -106,5 +115,33 @@ public class SearchFragment extends Fragment {
             }
             rvSearchResults.setVisibility(events.isEmpty() ? View.GONE : View.VISIBLE);
         });
+    }
+
+    private void applyChipFilter(String chip) {
+        switch (chip) {
+            case "All":
+                viewModel.setCategory(EventCategory.ALL);
+                viewModel.setFreeFilter(null);
+                viewModel.setOnlineFilter(null);
+                break;
+            case "Free":
+                viewModel.setFreeFilter(true);
+                break;
+            case "Paid":
+                viewModel.setFreeFilter(false);
+                break;
+            case "Society":
+                viewModel.setCategory(EventCategory.SOCIETY);
+                break;
+            case "Tech":
+                viewModel.setCategory(EventCategory.TECH);
+                break;
+            case "Arts":
+                viewModel.setCategory(EventCategory.ARTS);
+                break;
+            default:
+                // "Today", "This Week" — no VM method yet, ignore
+                break;
+        }
     }
 }

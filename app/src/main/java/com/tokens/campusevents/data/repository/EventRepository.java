@@ -26,7 +26,7 @@ public class EventRepository {
     public List<Event> getAllEvents() {
         List<Event> result = new ArrayList<>();
         for (Event event : MockData.events) {
-            if (event.status != EventStatus.CANCELLED) {
+            if (event.status != EventStatus.CANCELLED && event.status != EventStatus.ENDED) {
                 result.add(event);
             }
         }

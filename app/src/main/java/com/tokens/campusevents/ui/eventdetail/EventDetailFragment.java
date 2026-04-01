@@ -60,6 +60,7 @@ public class EventDetailFragment extends Fragment {
         View btnShare = view.findViewById(R.id.btn_share);
         TextView tvTitle = view.findViewById(R.id.tv_event_title);
         TextView tvHostedBy = view.findViewById(R.id.tv_hosted_by);
+        TextView btnFollow = view.findViewById(R.id.btn_follow);
         TextView tvDateDay = view.findViewById(R.id.tv_date_day);
         TextView tvDateNum = view.findViewById(R.id.tv_date_num);
         TextView tvVenueCard = view.findViewById(R.id.tv_venue_short);
@@ -81,6 +82,11 @@ public class EventDetailFragment extends Fragment {
             btnBack.setOnClickListener(v -> navController.navigateUp());
         }
 
+        // Follow button
+        if (btnFollow != null) {
+            btnFollow.setOnClickListener(v -> viewModel.toggleFollow());
+        }
+
         // Updates RecyclerView
         UpdateAdapter updateAdapter = new UpdateAdapter();
         if (rvUpdates != null) {
@@ -93,48 +99,31 @@ public class EventDetailFragment extends Fragment {
         viewModel.getEvent().observe(getViewLifecycleOwner(), event -> {
             if (event == null) return;
 
-            // Category tag
             if (tvCategoryTag != null) {
                 tvCategoryTag.setText(event.category.getDisplayName().toUpperCase(Locale.getDefault()));
             }
-
-            // Title
             if (tvTitle != null) {
                 tvTitle.setText(event.title);
             }
-
-            // Hosted by
             if (tvHostedBy != null) {
                 tvHostedBy.setText("Hosted by " + event.organizer);
             }
-
-            // Date card - extract short date
             if (tvDateDay != null && tvDateNum != null) {
                 bindDateCard(event.date, tvDateDay, tvDateNum);
             }
-
-            // Venue card
             if (tvVenueCard != null) {
                 tvVenueCard.setText(getShortVenueLabel(event.venue));
             }
-
-            // Seats card
             int seatsRemaining = viewModel.getSeatsRemaining();
             if (tvSeatsCard != null) {
                 tvSeatsCard.setText(seatsRemaining + " left");
             }
-
-            // Seat progress bar
             if (seatProgressBar != null) {
                 seatProgressBar.setProgress(viewModel.getSeatPercentage());
             }
-
-            // Full date
             if (tvFullDate != null) {
                 tvFullDate.setText(event.date);
             }
-
-            // Time
             if (tvTime != null) {
                 String timeText = event.time;
                 if (event.endTime != null && !event.endTime.isEmpty()) {
@@ -142,13 +131,9 @@ public class EventDetailFragment extends Fragment {
                 }
                 tvTime.setText(timeText);
             }
-
-            // Venue name
             if (tvVenueName != null) {
                 tvVenueName.setText(event.venue);
             }
-
-            // Venue hint
             if (tvVenueHint != null) {
                 if (event.venueHint != null && !event.venueHint.isEmpty()) {
                     tvVenueHint.setText(event.venueHint);
@@ -157,8 +142,6 @@ public class EventDetailFragment extends Fragment {
                     tvVenueHint.setVisibility(View.GONE);
                 }
             }
-
-            // Price
             if (tvPrice != null) {
                 if (event.isFree) {
                     tvPrice.setText("Free");
@@ -168,13 +151,9 @@ public class EventDetailFragment extends Fragment {
                     tvPrice.setTextColor(ContextCompat.getColor(requireContext(), R.color.price_tag));
                 }
             }
-
-            // Description
             if (tvDescription != null) {
                 tvDescription.setText(event.description);
             }
-
-            // Share button
             if (btnShare != null) {
                 btnShare.setOnClickListener(v -> {
                     Intent shareIntent = new Intent(Intent.ACTION_SEND);
@@ -184,14 +163,27 @@ public class EventDetailFragment extends Fragment {
                     startActivity(Intent.createChooser(shareIntent, "Share Event"));
                 });
             }
-
-            // Get tickets button
             if (btnGetTickets != null) {
                 btnGetTickets.setOnClickListener(v -> {
                     Bundle bundle = new Bundle();
                     bundle.putString("eventId", finalEventId);
                     navController.navigate(R.id.action_eventDetail_to_rsvp, bundle);
                 });
+            }
+        });
+
+        // Observe follow state
+        viewModel.getIsFollowing().observe(getViewLifecycleOwner(), isFollowing -> {
+            if (btnFollow != null && isFollowing != null) {
+                if (isFollowing) {
+                    btnFollow.setText(getString(R.string.following));
+                    btnFollow.setBackgroundResource(R.drawable.bg_chip_selected);
+                    btnFollow.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_on_primary));
+                } else {
+                    btnFollow.setText(getString(R.string.follow));
+                    btnFollow.setBackgroundResource(R.drawable.bg_button_secondary);
+                    btnFollow.setTextColor(ContextCompat.getColor(requireContext(), R.color.primary));
+                }
             }
         });
 
@@ -222,9 +214,7 @@ public class EventDetailFragment extends Fragment {
                 tvDateNum.setText(new SimpleDateFormat("d", Locale.getDefault()).format(parsedDate));
                 return;
             }
-        } catch (ParseException ignored) {
-            // Fall back to a simple text split if the mock date format changes.
-        }
+        } catch (ParseException ignored) {}
 
         String[] parts = rawDate.split(" ");
         if (parts.length >= 2) {
@@ -239,15 +229,9 @@ public class EventDetailFragment extends Fragment {
     }
 
     private String getShortVenueLabel(String venue) {
-        if (venue == null || venue.trim().isEmpty()) {
-            return "";
-        }
-
+        if (venue == null || venue.trim().isEmpty()) return "";
         String trimmedVenue = venue.trim();
-        if (trimmedVenue.equalsIgnoreCase("Online (Zoom)")) {
-            return "Online";
-        }
-
+        if (trimmedVenue.equalsIgnoreCase("Online (Zoom)")) return "Online";
         String[] parts = trimmedVenue.split("\\s+");
         return parts[parts.length - 1];
     }

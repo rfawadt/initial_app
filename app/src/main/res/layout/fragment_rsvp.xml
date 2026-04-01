@@ -201,48 +201,67 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!-- Bottom: Price + Confirm -->
+    <!-- Bottom: Price + Confirm / Cancel -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/background_secondary"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:padding="@dimen/spacing_md">
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/price_label"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="@dimen/text_tiny" />
+
+                <TextView
+                    android:id="@+id/tv_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PKR 500"
+                    android:textColor="@color/accent"
+                    android:textSize="@dimen/text_title"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
             <TextView
+                android:id="@+id/btn_confirm_rsvp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/price_label"
-                android:textColor="@color/text_secondary"
-                android:textSize="@dimen/text_tiny" />
-
-            <TextView
-                android:id="@+id/tv_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="PKR 500"
-                android:textColor="@color/accent"
-                android:textSize="@dimen/text_title"
+                android:layout_height="44dp"
+                android:background="@drawable/bg_button_primary"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/spacing_xl"
+                android:text="@string/confirm_rsvp"
+                android:textColor="@color/text_on_primary"
+                android:textSize="@dimen/text_body"
                 android:textStyle="bold" />
         </LinearLayout>
 
         <TextView
-            android:id="@+id/btn_confirm_rsvp"
-            android:layout_width="wrap_content"
-            android:layout_height="44dp"
-            android:background="@drawable/bg_button_primary"
+            android:id="@+id/btn_cancel_rsvp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="@dimen/spacing_sm"
+            android:background="@drawable/bg_button_secondary"
             android:gravity="center"
-            android:paddingHorizontal="@dimen/spacing_xl"
-            android:text="@string/confirm_rsvp"
-            android:textColor="@color/text_on_primary"
+            android:text="@string/cancel_rsvp"
+            android:textColor="@color/primary"
             android:textSize="@dimen/text_body"
-            android:textStyle="bold" />
+            android:visibility="gone" />
     </LinearLayout>
 </LinearLayout>

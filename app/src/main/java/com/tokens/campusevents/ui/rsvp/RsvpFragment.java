@@ -35,7 +35,6 @@ public class RsvpFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(RsvpViewModel.class);
         NavController navController = Navigation.findNavController(view);
 
-        // Get eventId from arguments
         String eventId = null;
         if (getArguments() != null) {
             eventId = getArguments().getString("eventId");
@@ -46,7 +45,6 @@ public class RsvpFragment extends Fragment {
             return;
         }
 
-        // Find views
         View btnBack = view.findViewById(R.id.btn_back);
         TextView tvEventInfo = view.findViewById(R.id.tv_event_info);
         TextView tvPrice = view.findViewById(R.id.tv_price);
@@ -54,16 +52,14 @@ public class RsvpFragment extends Fragment {
         TextView btnGoing = view.findViewById(R.id.btn_going);
         TextView btnInterested = view.findViewById(R.id.btn_interested);
         TextView btnConfirmRsvp = view.findViewById(R.id.btn_confirm_rsvp);
+        TextView btnCancelRsvp = view.findViewById(R.id.btn_cancel_rsvp);
 
-        // Back button
         if (btnBack != null) {
             btnBack.setOnClickListener(v -> navController.navigateUp());
         }
 
-        // Observe event
         viewModel.getEvent().observe(getViewLifecycleOwner(), event -> {
             if (event == null) return;
-
             if (tvEventInfo != null) {
                 tvEventInfo.setText(event.title + " - " + event.date);
             }
@@ -81,7 +77,7 @@ public class RsvpFragment extends Fragment {
             }
         });
 
-        // Observe RSVP status for button styles
+        // Observe RSVP status
         viewModel.getRsvpStatus().observe(getViewLifecycleOwner(), status -> {
             if (btnGoing != null) {
                 if (status == RsvpStatus.GOING) {
@@ -101,9 +97,13 @@ public class RsvpFragment extends Fragment {
                     btnInterested.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_secondary));
                 }
             }
+            // Show Cancel RSVP only when user already has an active RSVP
+            if (btnCancelRsvp != null) {
+                boolean hasRsvp = status != null && status != RsvpStatus.NONE;
+                btnCancelRsvp.setVisibility(hasRsvp ? View.VISIBLE : View.GONE);
+            }
         });
 
-        // Button clicks
         if (btnGoing != null) {
             btnGoing.setOnClickListener(v -> viewModel.selectStatus(RsvpStatus.GOING));
         }
@@ -111,7 +111,6 @@ public class RsvpFragment extends Fragment {
             btnInterested.setOnClickListener(v -> viewModel.selectStatus(RsvpStatus.INTERESTED));
         }
 
-        // Confirm RSVP
         if (btnConfirmRsvp != null) {
             btnConfirmRsvp.setOnClickListener(v -> {
                 RsvpStatus status = viewModel.getRsvpStatus().getValue();
@@ -124,21 +123,25 @@ public class RsvpFragment extends Fragment {
             });
         }
 
-        // Observe confirm result
+        if (btnCancelRsvp != null) {
+            btnCancelRsvp.setOnClickListener(v -> {
+                viewModel.cancelRsvp();
+                Toast.makeText(requireContext(), "RSVP cancelled", Toast.LENGTH_SHORT).show();
+                navController.navigateUp();
+            });
+        }
+
         viewModel.getConfirmResult().observe(getViewLifecycleOwner(), success -> {
             if (success != null) {
                 if (success) {
-                    Toast.makeText(requireContext(), "RSVP Confirmed!",
-                            Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), "RSVP Confirmed!", Toast.LENGTH_SHORT).show();
                     navController.navigateUp();
                 } else {
-                    Toast.makeText(requireContext(), "Event is Full",
-                            Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), "Event is Full", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-        // Load event data
         viewModel.loadEvent(eventId);
     }
 }

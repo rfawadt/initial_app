@@ -24,10 +24,16 @@ public class OrganizerEventAdapter extends RecyclerView.Adapter<OrganizerEventAd
     }
 
     private List<Event> events = new ArrayList<>();
-    private final OnEventClickListener eventClickListener;
+    private final OnEventClickListener editClickListener;
+    private final OnEventClickListener rsvpListClickListener;
+    private final OnEventClickListener sendUpdateClickListener;
 
-    public OrganizerEventAdapter(OnEventClickListener eventClickListener) {
-        this.eventClickListener = eventClickListener;
+    public OrganizerEventAdapter(OnEventClickListener editClickListener,
+                                  OnEventClickListener rsvpListClickListener,
+                                  OnEventClickListener sendUpdateClickListener) {
+        this.editClickListener = editClickListener;
+        this.rsvpListClickListener = rsvpListClickListener;
+        this.sendUpdateClickListener = sendUpdateClickListener;
     }
 
     public void submitList(List<Event> newEvents) {
@@ -47,17 +53,14 @@ public class OrganizerEventAdapter extends RecyclerView.Adapter<OrganizerEventAd
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Event event = events.get(position);
 
-        // Date, title, venue
         holder.tvDate.setText(event.date);
         holder.tvTitle.setText(event.title);
         holder.tvVenue.setText(event.venue);
 
-        // Thumbnail
         if (event.imageRes != 0) {
             holder.ivThumb.setImageResource(event.imageRes);
         }
 
-        // Status tag
         int bgRes;
         int textColorRes;
         String statusText;
@@ -95,12 +98,21 @@ public class OrganizerEventAdapter extends RecyclerView.Adapter<OrganizerEventAd
         holder.tvStatus.setTextColor(ContextCompat.getColor(
                 holder.itemView.getContext(), textColorRes));
 
-        // Item click
         holder.itemView.setOnClickListener(v -> {
-            if (eventClickListener != null) {
-                eventClickListener.onEventClick(event);
-            }
+            if (editClickListener != null) editClickListener.onEventClick(event);
         });
+
+        if (holder.btnViewRsvps != null) {
+            holder.btnViewRsvps.setOnClickListener(v -> {
+                if (rsvpListClickListener != null) rsvpListClickListener.onEventClick(event);
+            });
+        }
+
+        if (holder.btnSendUpdate != null) {
+            holder.btnSendUpdate.setOnClickListener(v -> {
+                if (sendUpdateClickListener != null) sendUpdateClickListener.onEventClick(event);
+            });
+        }
     }
 
     @Override
@@ -114,6 +126,8 @@ public class OrganizerEventAdapter extends RecyclerView.Adapter<OrganizerEventAd
         final TextView tvStatus;
         final TextView tvTitle;
         final TextView tvVenue;
+        final TextView btnViewRsvps;
+        final TextView btnSendUpdate;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -122,6 +136,8 @@ public class OrganizerEventAdapter extends RecyclerView.Adapter<OrganizerEventAd
             tvStatus = itemView.findViewById(R.id.tv_status);
             tvTitle = itemView.findViewById(R.id.tv_title);
             tvVenue = itemView.findViewById(R.id.tv_venue);
+            btnViewRsvps = itemView.findViewById(R.id.btn_view_rsvps);
+            btnSendUpdate = itemView.findViewById(R.id.btn_send_update);
         }
     }
 }
