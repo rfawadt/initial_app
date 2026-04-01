@@ -156,6 +156,25 @@ CampusEvents/
 
 ---
 
+## Changelog
+
+### April 1, 2026 — Bug Fix Pass (commit `8881958`)
+
+Addressed all gaps identified in peer review where user stories were marked **Done** in the table above but not fully wired in the UI.
+
+| # | Issue | Fix | Files |
+|---|-------|-----|-------|
+| P1 | Search chip callback was empty — selecting a chip had no effect | Wired chips to `SearchViewModel.setCategory()` / `setFreeFilter()`; added filter icon that opens `FilterBottomSheetFragment` | `SearchFragment`, `SearchViewModel`, `fragment_search.xml` |
+| P1 | `FilterBottomSheetFragment` Apply/Clear only dismissed — no filters applied | Apply now reads chip group + online/offline state, writes results to `NavBackStackEntry.SavedStateHandle`; SearchFragment observes and applies them | `FilterBottomSheetFragment`, `SearchFragment` |
+| P1 | Follow/Unfollow UI missing from EventDetail despite VM + repo support | Added `btn_follow` to event detail layout, wired to `toggleFollow()` with live state toggle (Follow ↔ Following) | `EventDetailFragment`, `fragment_event_detail.xml` |
+| P1 | Cancel RSVP button not exposed in RSVP screen despite `cancelRsvp()` existing | Added `btn_cancel_rsvp` (hidden by default, shown when RSVP exists), wired to `RsvpViewModel.cancelRsvp()` | `RsvpFragment`, `fragment_rsvp.xml` |
+| P2 | My Events only had Saved / My RSVPs — no Upcoming/Past split | Added sub-tab row (Upcoming / Past) under My RSVPs; backed by `loadUpcomingRsvpEvents()` and `loadPastRsvpEvents()` with real date filtering | `FavoritesFragment`, `FavoritesViewModel`, `fragment_favorites.xml` |
+| P2 | My Day loaded all GOING RSVPs regardless of date | `loadSchedule()` now filters to events whose `event.date` matches today. Added `evt_9` (April 1 2026) to MockData with GOING RSVP so screen is non-empty | `DiscoverViewModel`, `MockData` |
+| P2 | Home feed included ENDED events | `getAllEvents()` now excludes both `CANCELLED` and `ENDED` status | `EventRepository` |
+| ORG | View RSVPs + Send Update were unreachable from Organizer Dashboard | Added per-event action buttons to each organizer event card; wired to `nav_rsvp_list` and `nav_post_update` | `OrganizerEventAdapter`, `OrganizerDashboardFragment`, `item_organizer_event.xml` |
+
+---
+
 ## Wireframes
 
 See `docs/figma-screens/` for all 20 Figma wireframe exports, or visit [the Figma prototype](https://net-notice-77687535.figma.site).
