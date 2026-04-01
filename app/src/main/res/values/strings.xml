@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Campus Events</string>
+
+    <!-- Login -->
+    <string name="welcome_back">Welcome Back!</string>
+    <string name="email_label">EMAIL</string>
+    <string name="password_label">PASSWORD</string>
+    <string name="email_hint">Enter your email</string>
+    <string name="password_hint">Enter your password</string>
+    <string name="remember_me">Remember me</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="sign_in">Sign In</string>
+    <string name="continue_as_student">Continue as Student</string>
+    <string name="continue_as_organizer">Continue as Organizer</string>
+    <string name="or_divider">OR</string>
+    <string name="select_role">Select your role</string>
+
+    <!-- Bottom Navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_search">Search</string>
+    <string name="nav_discover">Discover</string>
+    <string name="nav_favorites">Favourites</string>
+    <string name="nav_profile">Profile</string>
+
+    <!-- Home -->
+    <string name="good_morning">GOOD MORNING</string>
+    <string name="greeting">Hey, %s!</string>
+    <string name="search_hint">Search events, societies\u2026</string>
+    <string name="popular_in_lums">POPULAR IN LUMS</string>
+    <string name="more_events">MORE EVENTS</string>
+    <string name="see_all">See all</string>
+    <string name="today">Today</string>
+    <string name="new_tag">NEW</string>
+
+    <!-- Categories -->
+    <string name="category_all">All</string>
+    <string name="category_today">Today</string>
+    <string name="category_free">Free</string>
+    <string name="category_society">Society</string>
+    <string name="category_tech">Tech</string>
+    <string name="category_arts">Arts</string>
+    <string name="category_business">Business</string>
+    <string name="category_sports">Sports</string>
+    <string name="category_academic">Academic</string>
+
+    <!-- Event Detail -->
+    <string name="seat_availability">Seat Availability</string>
+    <string name="seats_remaining">%d seats remaining</string>
+    <string name="about">About</string>
+    <string name="get_tickets">Get Tickets</string>
+    <string name="keynote_speaker">Keynote Speaker</string>
+    <string name="refund_policy">Refund Policy</string>
+    <string name="eatery_perks">Eatery Perks Available</string>
+    <string name="hosted_by">Hosted by %s</string>
+    <string name="price_label">PRICE</string>
+    <string name="free">Free</string>
+    <string name="pkr_format">PKR %,d</string>
+    <string name="add_to_calendar">Add</string>
+    <string name="walk_info">%s min walk</string>
+    <string name="opposite_info">Opposite the %s</string>
+
+    <!-- RSVP -->
+    <string name="rsvp">RSVP</string>
+    <string name="rsvp_status">RSVP Status</string>
+    <string name="going">Going</string>
+    <string name="interested">Interested</string>
+    <string name="enable_reminder">Enable Reminder</string>
+    <string name="reminder_desc">1 hour before event</string>
+    <string name="join_updates_stream">Join Updates Stream</string>
+    <string name="updates_desc">Get venue/time change alerts</string>
+    <string name="buddy_match">Buddy Match</string>
+    <string name="buddy_desc">Find someone to go with</string>
+    <string name="seats_of_remaining">%1$d of %2$d seats remaining</string>
+    <string name="confirm_rsvp">Confirm RSVP</string>
+    <string name="cancel_rsvp">Cancel RSVP</string>
+    <string name="rsvp_confirmed">RSVP Confirmed!</string>
+    <string name="event_full">Event is Full</string>
+
+    <!-- Search -->
+    <string name="search_title">Search</string>
+    <string name="events_count">%d Events</string>
+    <string name="sort_by_relevant">Sort by relevant</string>
+    <string name="this_week">This Week</string>
+    <string name="paid">Paid</string>
+    <string name="no_results">No events found</string>
+
+    <!-- Filters -->
+    <string name="filters">Filters</string>
+    <string name="filter_category">Category</string>
+    <string name="filter_location">Location</string>
+    <string name="filter_type">Type</string>
+    <string name="online">Online</string>
+    <string name="offline">Offline</string>
+    <string name="apply_filters">Apply Filters</string>
+    <string name="clear_filters">Clear</string>
+
+    <!-- My Events / Favourites -->
+    <string name="saved_events">Saved Events</string>
+    <string name="saved_events_subtitle">Events you\'ve hearted</string>
+    <string name="my_rsvps">My RSVPs</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="past">Past</string>
+    <string name="no_saved_events">No saved events yet</string>
+    <string name="no_rsvps">No RSVPs yet</string>
+
+    <!-- My Day -->
+    <string name="my_day">My Day</string>
+    <string name="schedule_conflict">Schedule Conflict</string>
+    <string name="conflict_desc">%1$s and %2$s overlap at %3$s</string>
+    <string name="no_events_today">No events scheduled for today</string>
+
+    <!-- Profile -->
+    <string name="profile">Profile</string>
+    <string name="primary_city">Primary City</string>
+    <string name="google_calendar">Google Calendar</string>
+    <string name="calendar_desc">Sync events to your calendar</string>
+    <string name="rsvp_reminders">RSVP Reminders</string>
+    <string name="reminders_desc">Get notified before events</string>
+    <string name="manage_events">Manage Events</string>
+    <string name="account_settings">Account Settings</string>
+    <string name="switch_to_organizer">Switch to Organizer Mode</string>
+    <string name="switch_to_student">Switch to Student Mode</string>
+    <string name="logout">Logout</string>
+
+    <!-- Notifications -->
+    <string name="notifications">Notifications</string>
+    <string name="update_type">UPDATE</string>
+    <string name="reminder_type">REMINDER</string>
+    <string name="cancelled_type">CANCELLED</string>
+    <string name="opt_out">Opt out of this event</string>
+    <string name="no_notifications">No notifications yet</string>
+
+    <!-- Organizer -->
+    <string name="dashboard">Dashboard</string>
+    <string name="organizer_view">Organizer view</string>
+    <string name="events_stat">Events</string>
+    <string name="rsvps_stat">RSVPs</string>
+    <string name="views_stat">Views</string>
+    <string name="create_event">Create Event</string>
+    <string name="my_events">My Events</string>
+    <string name="live">Live</string>
+    <string name="draft">Draft</string>
+    <string name="ended">Ended</string>
+    <string name="cancelled">Cancelled</string>
+
+    <!-- Create Event -->
+    <string name="upload_event_image">Upload Event Image</string>
+    <string name="upload_hint">PNG, JPG up to 10MB</string>
+    <string name="event_name">Event Name</string>
+    <string name="event_name_hint">Enter event name</string>
+    <string name="description">Description</string>
+    <string name="description_hint">Describe your event\u2026</string>
+    <string name="category">Category</string>
+    <string name="select_category">Select category</string>
+    <string name="start_date">Start Date</string>
+    <string name="start_time">Start Time</string>
+    <string name="date_hint">dd/mm/yyyy</string>
+    <string name="time_hint">--:-- --</string>
+    <string name="end_date">End Date</string>
+    <string name="end_time">End Time</string>
+    <string name="venue">Venue</string>
+    <string name="venue_hint">Enter venue</string>
+    <string name="capacity">Capacity</string>
+    <string name="capacity_hint">Maximum attendees</string>
+    <string name="price_pkr">Price (PKR)</string>
+    <string name="price_hint">0</string>
+    <string name="free_event">Free Event</string>
+    <string name="save_draft">Save Draft</string>
+    <string name="publish">Publish</string>
+
+    <!-- Edit Event -->
+    <string name="edit_event">Edit Event</string>
+    <string name="cancel_event">Cancel Event</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="cancel_event_confirm">Are you sure you want to cancel this event?</string>
+    <string name="yes_cancel">Yes, Cancel</string>
+    <string name="no_keep">No, Keep</string>
+
+    <!-- RSVP List -->
+    <string name="rsvp_list">RSVP List</string>
+    <string name="going_count">%d Going</string>
+    <string name="interested_count">%d Interested</string>
+    <string name="total_rsvps">Total RSVPs: %d</string>
+    <string name="no_rsvps_yet">No RSVPs yet</string>
+
+    <!-- Post Update -->
+    <string name="send_update">Send Update</string>
+    <string name="update_type_label">Update Type</string>
+    <string name="general">General</string>
+    <string name="venue_change">Venue Change</string>
+    <string name="time_change">Time Change</string>
+    <string name="cancellation">Cancellation</string>
+    <string name="message">Message</string>
+    <string name="message_hint">Type your update message here\u2026</string>
+    <string name="char_count">%d / 500 characters</string>
+    <string name="notify_attendees">Notify all RSVPed attendees</string>
+    <string name="people_receive">%d people will receive this update</string>
+    <string name="notification_preview">Notification Preview</string>
+    <string name="preview_message">Your message will appear here\u2026</string>
+    <string name="cancel">Cancel</string>
+    <string name="send">Send Update</string>
+
+    <!-- Share -->
+    <string name="share_event">Share Event</string>
+    <string name="share_text">Check out %s on %s at %s! RSVP now on Campus Events.</string>
+
+    <!-- Follow -->
+    <string name="follow">Follow</string>
+    <string name="following">Following</string>
+    <string name="unfollow">Unfollow</string>
+
+    <!-- General -->
+    <string name="ok">OK</string>
+    <string name="error">Error</string>
+    <string name="loading">Loading\u2026</string>
+    <string name="retry">Retry</string>
+</resources>

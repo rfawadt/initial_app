@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/nav_home">
+
+    <!-- Bottom Nav Destinations -->
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.tokens.campusevents.ui.home.HomeFragment"
+        android:label="@string/nav_home"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_home_to_eventDetail"
+            app:destination="@id/nav_event_detail" />
+        <action
+            android:id="@+id/action_home_to_notifications"
+            app:destination="@id/nav_notifications" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_search"
+        android:name="com.tokens.campusevents.ui.search.SearchFragment"
+        android:label="@string/nav_search"
+        tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/action_search_to_eventDetail"
+            app:destination="@id/nav_event_detail" />
+        <action
+            android:id="@+id/action_search_to_filter"
+            app:destination="@id/nav_filter" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_discover"
+        android:name="com.tokens.campusevents.ui.discover.DiscoverFragment"
+        android:label="@string/nav_discover"
+        tools:layout="@layout/fragment_discover">
+        <action
+            android:id="@+id/action_discover_to_eventDetail"
+            app:destination="@id/nav_event_detail" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_favorites"
+        android:name="com.tokens.campusevents.ui.favorites.FavoritesFragment"
+        android:label="@string/nav_favorites"
+        tools:layout="@layout/fragment_favorites">
+        <action
+            android:id="@+id/action_favorites_to_eventDetail"
+            app:destination="@id/nav_event_detail" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.tokens.campusevents.ui.profile.ProfileFragment"
+        android:label="@string/nav_profile"
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_profile_to_organizerDashboard"
+            app:destination="@id/nav_organizer_dashboard" />
+    </fragment>
+
+    <!-- Detail Screens -->
+    <fragment
+        android:id="@+id/nav_event_detail"
+        android:name="com.tokens.campusevents.ui.eventdetail.EventDetailFragment"
+        android:label="Event Detail"
+        tools:layout="@layout/fragment_event_detail">
+        <argument
+            android:name="eventId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_eventDetail_to_rsvp"
+            app:destination="@id/nav_rsvp" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_rsvp"
+        android:name="com.tokens.campusevents.ui.rsvp.RsvpFragment"
+        android:label="@string/rsvp"
+        tools:layout="@layout/fragment_rsvp">
+        <argument
+            android:name="eventId"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_notifications"
+        android:name="com.tokens.campusevents.ui.notifications.NotificationsFragment"
+        android:label="@string/notifications"
+        tools:layout="@layout/fragment_notifications" />
+
+    <fragment
+        android:id="@+id/nav_filter"
+        android:name="com.tokens.campusevents.ui.search.FilterBottomSheetFragment"
+        android:label="@string/filters"
+        tools:layout="@layout/fragment_filter_sheet" />
+
+    <!-- Organizer Screens -->
+    <fragment
+        android:id="@+id/nav_organizer_dashboard"
+        android:name="com.tokens.campusevents.ui.organizer.OrganizerDashboardFragment"
+        android:label="@string/dashboard"
+        tools:layout="@layout/fragment_organizer_dashboard">
+        <action
+            android:id="@+id/action_dashboard_to_createEvent"
+            app:destination="@id/nav_create_event" />
+        <action
+            android:id="@+id/action_dashboard_to_editEvent"
+            app:destination="@id/nav_edit_event" />
+        <action
+            android:id="@+id/action_dashboard_to_rsvpList"
+            app:destination="@id/nav_rsvp_list" />
+        <action
+            android:id="@+id/action_dashboard_to_postUpdate"
+            app:destination="@id/nav_post_update" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_create_event"
+        android:name="com.tokens.campusevents.ui.organizer.CreateEventFragment"
+        android:label="@string/create_event"
+        tools:layout="@layout/fragment_create_event" />
+
+    <fragment
+        android:id="@+id/nav_edit_event"
+        android:name="com.tokens.campusevents.ui.organizer.EditEventFragment"
+        android:label="@string/edit_event"
+        tools:layout="@layout/fragment_edit_event">
+        <argument
+            android:name="eventId"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_rsvp_list"
+        android:name="com.tokens.campusevents.ui.organizer.RsvpListFragment"
+        android:label="@string/rsvp_list"
+        tools:layout="@layout/fragment_rsvp_list">
+        <argument
+            android:name="eventId"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_post_update"
+        android:name="com.tokens.campusevents.ui.organizer.PostUpdateFragment"
+        android:label="@string/send_update"
+        tools:layout="@layout/fragment_post_update">
+        <argument
+            android:name="eventId"
+            app:argType="string" />
+    </fragment>
+
+</navigation>

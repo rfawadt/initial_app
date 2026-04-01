@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base Dark Theme -->
+    <color name="background_primary">#FF0D1117</color>
+    <color name="background_secondary">#FF161B22</color>
+    <color name="surface_card">#FF1C2128</color>
+    <color name="surface_elevated">#FF21262D</color>
+
+    <!-- Brand Colors -->
+    <color name="primary">#FF00BCD4</color>
+    <color name="primary_dark">#FF0097A7</color>
+    <color name="primary_light">#FF26C6DA</color>
+    <color name="accent">#FFFFC107</color>
+    <color name="accent_dark">#FFFFA000</color>
+
+    <!-- Text Colors -->
+    <color name="text_primary">#FFFFFFFF</color>
+    <color name="text_secondary">#FF8B949E</color>
+    <color name="text_tertiary">#FF484F58</color>
+    <color name="text_on_primary">#FF000000</color>
+
+    <!-- Status Colors -->
+    <color name="status_live">#FF00C853</color>
+    <color name="status_draft">#FFFFC107</color>
+    <color name="status_ended">#FFFF5252</color>
+    <color name="status_cancelled">#FFFF5252</color>
+
+    <!-- Category Colors -->
+    <color name="category_society">#FF00BCD4</color>
+    <color name="category_arts">#FFFF5252</color>
+    <color name="category_tech">#FF448AFF</color>
+    <color name="category_business">#FF7C4DFF</color>
+    <color name="category_sports">#FF00C853</color>
+    <color name="category_academic">#FFFF9800</color>
+
+    <!-- RSVP Colors -->
+    <color name="rsvp_going">#FF00BCD4</color>
+    <color name="rsvp_interested">#FFFFC107</color>
+
+    <!-- UI Elements -->
+    <color name="divider">#FF21262D</color>
+    <color name="input_background">#FF161B22</color>
+    <color name="input_border">#FF30363D</color>
+    <color name="chip_background">#FF21262D</color>
+    <color name="chip_selected">#FF00BCD4</color>
+    <color name="ripple">#3300BCD4</color>
+    <color name="seat_progress_bg">#FF21262D</color>
+    <color name="seat_progress_fill">#FF00BCD4</color>
+    <color name="price_tag">#FFFFC107</color>
+    <color name="free_tag">#FF00C853</color>
+    <color name="new_tag">#FF00BCD4</color>
+
+    <!-- Bottom Nav -->
+    <color name="bottom_nav_active">#FF00BCD4</color>
+    <color name="bottom_nav_inactive">#FF484F58</color>
+    <color name="bottom_nav_background">#FF0D1117</color>
+
+    <!-- Notification Types -->
+    <color name="notification_update">#FF448AFF</color>
+    <color name="notification_reminder">#FF00C853</color>
+    <color name="notification_cancelled">#FFFF5252</color>
+
+    <!-- Misc -->
+    <color name="heart_filled">#FFFFC107</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="black">#FF000000</color>
+    <color name="transparent">#00000000</color>
+</resources>

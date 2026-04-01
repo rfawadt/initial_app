@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingHorizontal="@dimen/spacing_md">
+
+    <!-- Time Label -->
+    <TextView
+        android:id="@+id/tv_hour"
+        android:layout_width="@dimen/schedule_time_width"
+        android:layout_height="@dimen/schedule_hour_height"
+        android:gravity="top|end"
+        android:paddingEnd="@dimen/spacing_sm"
+        android:text="9 AM"
+        android:textColor="@color/text_tertiary"
+        android:textSize="@dimen/text_caption" />
+
+    <!-- Event Block (or empty) -->
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="@dimen/schedule_hour_height"
+        android:layout_weight="1">
+
+        <!-- Dotted line background -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="top"
+            android:background="@color/divider" />
+
+        <!-- Event Card (shown when there's an event) -->
+        <LinearLayout
+            android:id="@+id/event_block"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_chip_selected"
+            android:orientation="vertical"
+            android:padding="@dimen/spacing_sm"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_event_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="LUMS MUN 2025"
+                android:textColor="@color/text_on_primary"
+                android:textSize="@dimen/text_body"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_event_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="9 AM - 12 PM"
+                android:textColor="@color/text_on_primary"
+                android:textSize="@dimen/text_caption"
+                android:alpha="0.8" />
+
+            <TextView
+                android:id="@+id/tv_event_venue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="LUMS Auditorium"
+                android:textColor="@color/text_on_primary"
+                android:textSize="@dimen/text_caption"
+                android:alpha="0.7" />
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>
